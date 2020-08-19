@@ -55,6 +55,7 @@ function confirmQuantity() {
   if (characterQuantity < 8 || characterQuantity > 128) {
     alert("Please ensure a number between 8 and 128 characters, inclusive.");
     confirmQuantity();
+    return;
   };
 };
 
@@ -71,6 +72,7 @@ function confirmUserInputs() {
   if (upperCaseConfirm === false && lowerCaseConfirm === false && numericConfirm === false && specialCaseConfirm === false) {
     alert("Please include at least one of the following case types: Uppercase, Lowercase, Numeric, & Special Case.");
     confirmUserInputs();
+    return;
   };
 };
 
@@ -81,10 +83,11 @@ function generatePassword(){
   confirmUserInputs();
   createFinalArray();
   var userPassword = "";
-    for (var i = 0; i < characterQuantity; i++){
-      var character = totalCharacters[Math.floor(Math.random()*totalCharacters.length)];
+    for (var i = 0; i < +characterQuantity; i++){
+      // Getting a random number between 0 and totalCharacters.length
+      var character = totalCharacters[Math.floor(Math.random() * totalCharacters.length)];
       console.log(character);
-      password += character;
+      userPassword += character;
     };
     totalCharacters = [];
     return userPassword;
@@ -93,30 +96,37 @@ function generatePassword(){
 
 // ===== 2. Calling the Functions and Generate Final Array =====
 
+// function createFinalArray() {
+//   if (upperCaseConfirm) {
+//       Array.prototype.push.apply(totalCharacters, upperCaseArray);
+//   };
+//   if (lowerCaseConfirm) {
+//       Array.prototype.push.apply(totalCharacters, lowerCaseArray);
+//   };
+//   if (numericConfirm) {
+//       Array.prototype.push.apply(totalCharacters, numericArray);
+//   };
+//   if (specialCaseConfirm) {
+//       Array.prototype.push.apply(totalCharacters, specialCaseArray);
+//   };
+//   };
 
-console.log(upperCaseConfirm);
-console.log(lowerCaseConfirm);
-console.log(numericConfirm);
-console.log(specialCaseConfirm);
-console.log(characterQuantity);
 
+// ===== 2. Or This Option =====
 function createFinalArray() {
-  if (upperCaseConfirm) {
-      Array.prototype.push.apply(totalCharacters, upperCaseArray);
-  };
-  if (lowerCaseConfirm) {
-      Array.prototype.push.apply(totalCharacters, lowerCaseArray);
-  };
-  if (numericConfirm) {
-      Array.prototype.push.apply(totalCharacters, numericArray);
-  };
-  if (specialCaseConfirm) {
-      Array.prototype.push.apply(totalCharacters, specialCaseArray);
-  };
-  };
-
-// Add event listener to generate button
-generateBtn.addEventListener= ("click", writePassword);
+if (upperCaseConfirm) {
+  totalCharacters.concat (upperCaseArray);
+};
+if (lowerCaseConfirm) {
+  totalCharacters.concat (lowerCaseArray);
+};
+if (numericConfirm) {
+  totalCharacters.concat (numericArray);
+};
+if (specialCaseConfirm) {
+  totalCharacters.concat (specialCaseArray);
+};
+};
 
 // ===== Generate Password and Input =====
 
@@ -127,3 +137,5 @@ function writePassword() {
   passwordText.textContent = userPassword;
 };
 
+// Add Event Listener to Generate Button
+generateBtn.addEventListener= ('click', writePassword);
