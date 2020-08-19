@@ -19,30 +19,28 @@
 
 var generateBtn = document.querySelector("#generate");
 // Write password to the #password input
-function start() {
-   console.log("We're live!");
-   var password = generatePassword();
+function writePassword() {
+   var userPassword = generatePassword();
    var passwordText = document.querySelector("#password");
-   passwordText.value = password;
-}
+   passwordText.value = userPassword;
+  }
 
 
 // ===== 1. Definitions =====
 
 // Define Variables
-var upperCaseConfirm = false;
-var lowerCaseConfirm = false;
-var numericConfirm = false;
-var specialCaseConfirm = false;
+var upperCaseConfirm;
+var lowerCaseConfirm;
+var numericConfirm;
+var specialCaseConfirm;
 var characterQuantity;
-var generateBtn = document.querySelector("#generate");
 
 // Define Arrays
-var upperCaseArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var lowerCaseArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var numericArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var specialCaseArray = ["!", "#", "$", "%", "&", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "|", "~", "-", "_", "{", "}", "`", "'", '"', "/"];
-var userOptionsArray = [];
+const upperCaseArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+const lowerCaseArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+const numericArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const specialCaseArray = ["!", "#", "$", "%", "&", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "|", "~", "-", "_", "{", "}", "`", "'", '"', "/"];
+var totalCharacters = [];
 
 // Define Functions for User Interaction
 // ===== Character Quantity Prompt =====
@@ -58,7 +56,6 @@ function confirmQuantity() {
     alert("Please ensure a number between 8 and 128 characters, inclusive.");
     confirmQuantity();
   };
-
 };
 
 // ===== Confirmation Prompts =====
@@ -77,10 +74,25 @@ function confirmUserInputs() {
   };
 };
 
+// ===== Generate Password Function =====
+
+function generatePassword(){
+  confirmQuantity();
+  confirmUserInputs();
+  createFinalArray();
+  var userPassword = "";
+    for (var i = 0; i < characterQuantity; i++){
+      var character = totalCharacters[Math.floor(Math.random()*totalCharacters.length)];
+      console.log(character);
+      password += character;
+    };
+    totalCharacters = [];
+    return userPassword;
+  }
+
+
 // ===== 2. Calling the Functions and Generate Final Array =====
 
-confirmQuantity();
-confirmUserInputs();
 
 console.log(upperCaseConfirm);
 console.log(lowerCaseConfirm);
@@ -90,162 +102,28 @@ console.log(characterQuantity);
 
 function createFinalArray() {
   if (upperCaseConfirm) {
-      Array.prototype.push.apply(totalCharacters, upperCasedCharacters);
+      Array.prototype.push.apply(totalCharacters, upperCaseArray);
   };
   if (lowerCaseConfirm) {
-      Array.prototype.push.apply(totalCharacters, lowerCasedCharacters);
+      Array.prototype.push.apply(totalCharacters, lowerCaseArray);
   };
   if (numericConfirm) {
-      Array.prototype.push.apply(totalCharacters, numericCharacters);
+      Array.prototype.push.apply(totalCharacters, numericArray);
   };
   if (specialCaseConfirm) {
-      Array.prototype.push.apply(totalCharacters, specialCharacters);
+      Array.prototype.push.apply(totalCharacters, specialCaseArray);
   };
   };
 
+// Add event listener to generate button
+generateBtn.addEventListener= ("click", writePassword);
 
 // ===== Generate Password and Input =====
 
 function writePassword() {
-  var password = generatePassword();
-  // console.log(password);
-  var passwordText = document.querySelector(“#password”);
-  passwordText.textContent = password;
+  var userPassword = generatePassword();
+  console.log(userPassword);
+  var passwordText = document.querySelector("#password");
+  passwordText.textContent = userPassword;
 };
 
-// Add event listener to generate button
-generateBtn.addEventListener(“click”, writePassword);
-
-
-
-
-
-
-
-
-
-
-// =================below is archive=================
-// notes
-    // Possible combinations = possible number of characters^Password length
-
-
-// Assignment Code
-
-// Write password to the #password input
-
-
-
-// build a concatenated array based on user selections
-// var userOptionsArray = 
-
-// prompt for length
-
-// if length is not greater than 8 and less than 128
-  // alert must have password between 8 and 128 chars
-
-// prompt lowercase
-// uppercase
-// numeric
-// special characters
-
-// store in vars
-// check for length
-
-  // generate password
-
-
-
-  // if (uppercase)
-    // add first character from random upper
-
-  // if numeric
-    // add second char from random upper
-
-  // if special
-    // add second char from random upper
-
-  // if (lowercase)
-    // for each missing letter add a letter from the lowercase
-    // for (var i = password.length; i < passwordLength; i++)
-    // add char from lowercase
-    // characterFiller = specialCharactersArray;
-
-    // while (password.length < passwordLength) {
-
-//   // alert password
-//   // return password
-
-// function generatePassword() {
-
-// }
-
-// // write password to password input
-
-//   var password = passwordPrompt();
-//   var passwordText = document.querySelector("#password");
-
-//   passwordText.value = password;
-
-// }
-
-// // Add event listener to generate button
-// generateBtn.addEventListener("click", writePassword);
-
-
-
-
-// // below is from office hours 8/17
-
-// //return a string
-// function generatePassword() {
-//    // ======= vars definition ======
-//    // Array of special characters to be included in password
-
-//    var userOptionalChars = [];
-//    // ======= functions definition ======
-//    function getUserOptions() {
-//       // get user options and store in vars
-//       // check for length (it should be longer than 8 and shorter than 128)
-//       // check if lower
-//       // check if upper
-//       // check if special
-//       // check if numeric
-//       // check that at least one is true
-//         // else - alert user
-//     }
-//     function generatePassword(userOptions) {
-//       var password = [];
-//       // if lower
-//         // push a random lower char to password
-//         // add lowerCharsArray to userOptionalChars
-//       // if upper
-//         // push a random upper char to password
-//         // add upperCharsArray to userOptionalChars
-//       // if special
-//         // push a random special char to password
-//         // add specialCharsArray to userOptionalChars
-//       // if numeric
-//         // push a random numeric char to password
-//         // add numericCharsArray to userOptionalChars
-//       // for loop between start number of elemnts in password to the requested number of charactars
-//       // mutate the array to a string
-//       // return password string
-//     }
-//    // ======= functions calls (start) ======
-//    // getUserOptions();
-
-//    // generatePassword(userOption)
-// }
-// // Add event listener to generate button
-// generateBtn.addEventListener("click", start);
-// // var expectSpecialChars = false;
-// // var expectNumericChars = false;
-// // var expectUppercaseChars = false;
-// // var expectLowercaseChars = false;
-// // var userOptions = {
-// //   expectSpecialChars: false,
-// //   expectNumericChars: false,
-// //   expectUppercaseChars: false,
-// //   expectLowercaseChars: false,
-// // }
