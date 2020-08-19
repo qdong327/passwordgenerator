@@ -1,19 +1,30 @@
 // Instructions
-  // GIVEN I need a new, secure password
-  // WHEN I click the button to generate a password
-  // THEN I am presented with a series of prompts for password criteria
-  // WHEN prompted for password criteria
-  // THEN I select which criteria to include in the password
-  // WHEN prompted for the length of the password
-  // THEN I choose a length of at least 8 characters and no more than 128 characters
-  // WHEN prompted for character types to include in the password
-  // THEN I choose lowercase, uppercase, numeric, and/or special characters
-  // WHEN I answer each prompt
-  // THEN my input should be validated and at least one character type should be selected
-  // WHEN all prompts are answered
-  // THEN a password is generated that matches the selected criteria
-  // WHEN the password is generated
-  // THEN the password is either displayed in an alert or written to the page
+// GIVEN I need a new, secure password
+// WHEN I click the button to generate a password
+// THEN I am presented with a series of prompts for password criteria
+// WHEN prompted for password criteria
+// THEN I select which criteria to include in the password
+// WHEN prompted for the length of the password
+// THEN I choose a length of at least 8 characters and no more than 128 characters
+// WHEN prompted for character types to include in the password
+// THEN I choose lowercase, uppercase, numeric, and/or special characters
+// WHEN I answer each prompt
+// THEN my input should be validated and at least one character type should be selected
+// WHEN all prompts are answered
+// THEN a password is generated that matches the selected criteria
+// WHEN the password is generated
+// THEN the password is either displayed in an alert or written to the page
+
+// Provided Assignment Code
+
+var generateBtn = document.querySelector("#generate");
+// Write password to the #password input
+function start() {
+   console.log("We're live!");
+   var password = generatePassword();
+   var passwordText = document.querySelector("#password");
+   passwordText.value = password;
+}
 
 
 // ===== 1. Definitions =====
@@ -33,50 +44,82 @@ var numericArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var specialCaseArray = ["!", "#", "$", "%", "&", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "|", "~", "-", "_", "{", "}", "`", "'", '"', "/"];
 var userOptionsArray = [];
 
-// ===== 2. Generate Password and Input =====
-
-
-function generatePassword() {
-  confirmUserInputs ();
-  generateFinalArray ();
-  var password = "";
-  for (var i = 0; i < characterQuantity; i++) {
-    let character = totalCharacters[Math.floor(Math.random() * characterQuantity)];
-    password += character;
-  } 
-}
-
-// ===== 3. Confirmation Prompts =====
-function confirmUserInputs () {
-// Confirm Uppercase
-upperCaseConfirm = confirm("Would you like your password to include Uppercase characters?");
-// Confirm Lowercase
-lowerCaseConfirm = confirm("Would you like your password to include Lowercase characters?");
-// Confirm Numerics
-numericConfirm = confirm("Would you like your password to include numbers?");
-// Confirm Special Chars
-specialCaseConfirm = confirm("Would you like your password to include Special characters?");
-// Confirm Password Length
-characterQuantity = prompt("How many characters, between 8 and 128, would you like your password to contain?");
-// Conditionals
-if (characterQuantity < 8 || characterQuantity > 128){
-  alert("Please ensure a number between 8 and 128 characters, inclusive.");
+// Define Functions for User Interaction
+// ===== Character Quantity Prompt =====
+function confirmQuantity() {
+  // Confirm Password Length
   characterQuantity = prompt("How many characters, between 8 and 128, would you like your password to contain?");
+  // Conditionals
+  if (characterQuantity === null) {
+    alert("Please give a quantity!");
+    characterQuantity = prompt("How many characters, between 8 and 128, would you like your password to contain?");
   };
-if (upperCaseConfirm === false && lowerCaseConfirm === false && numericConfirm === false && specialCaseConfirm === false){
-  alert("Please include at least one of the following case types: Uppercase, Lowercase, Numeric, & Special Case.")
-  confirmUserInputs ();
-}
+  if (characterQuantity < 8 || characterQuantity > 128) {
+    alert("Please ensure a number between 8 and 128 characters, inclusive.");
+    confirmQuantity();
+  };
+
 };
 
+// ===== Confirmation Prompts =====
+function confirmUserInputs() {
+  // Confirm Uppercase
+  upperCaseConfirm = confirm("Would you like your password to include Uppercase characters?");
+  // Confirm Lowercase
+  lowerCaseConfirm = confirm("Would you like your password to include Lowercase characters?");
+  // Confirm Numerics
+  numericConfirm = confirm("Would you like your password to include numbers?");
+  // Confirm Special Chars
+  specialCaseConfirm = confirm("Would you like your password to include Special characters?");
+  if (upperCaseConfirm === false && lowerCaseConfirm === false && numericConfirm === false && specialCaseConfirm === false) {
+    alert("Please include at least one of the following case types: Uppercase, Lowercase, Numeric, & Special Case.");
+    confirmUserInputs();
+  };
+};
 
-// ===== 4. Generate Final Array =====
+// ===== 2. Calling the Functions and Generate Final Array =====
 
-function generateFinalArray() {
-  if (confirmUpperCase) {
-    Array.prototype.push.apply(totalCharacters, upperCaseArray);
-  }
-}
+confirmQuantity();
+confirmUserInputs();
+
+console.log(upperCaseConfirm);
+console.log(lowerCaseConfirm);
+console.log(numericConfirm);
+console.log(specialCaseConfirm);
+console.log(characterQuantity);
+
+function createFinalArray() {
+  if (upperCaseConfirm) {
+      Array.prototype.push.apply(totalCharacters, upperCasedCharacters);
+  };
+  if (lowerCaseConfirm) {
+      Array.prototype.push.apply(totalCharacters, lowerCasedCharacters);
+  };
+  if (numericConfirm) {
+      Array.prototype.push.apply(totalCharacters, numericCharacters);
+  };
+  if (specialCaseConfirm) {
+      Array.prototype.push.apply(totalCharacters, specialCharacters);
+  };
+  };
+
+
+// ===== Generate Password and Input =====
+
+function writePassword() {
+  var password = generatePassword();
+  // console.log(password);
+  var passwordText = document.querySelector(“#password”);
+  passwordText.textContent = password;
+};
+
+// Add event listener to generate button
+generateBtn.addEventListener(“click”, writePassword);
+
+
+
+
+
 
 
 
@@ -152,17 +195,8 @@ function generateFinalArray() {
 
 
 
-// // belwo is from office hours 8/17
+// // below is from office hours 8/17
 
-// // Assignment Code
-// var generateBtn = document.querySelector("#generate");
-// // Write password to the #password input
-// function start() {
-//    console.log("we're here!");
-//    var password = generatePassword();
-//    var passwordText = document.querySelector("#password");
-//    passwordText.value = password;
-// }
 // //return a string
 // function generatePassword() {
 //    // ======= vars definition ======
@@ -200,7 +234,7 @@ function generateFinalArray() {
 //     }
 //    // ======= functions calls (start) ======
 //    // getUserOptions();
-  
+
 //    // generatePassword(userOption)
 // }
 // // Add event listener to generate button
