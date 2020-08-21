@@ -17,7 +17,6 @@
 
 // Provided Assignment Code
 
-var generateBtn = document.querySelector("#generate");
 // Write password to the #password input
 function writePassword() {
    var userPassword = generatePassword();
@@ -86,12 +85,27 @@ function generatePassword(){
     for (var i = 0; i < +characterQuantity; i++){
       // Getting a random number between 0 and totalCharacters.length
       var character = totalCharacters[Math.floor(Math.random() * totalCharacters.length)];
-      console.log(character);
       userPassword += character;
     };
-    totalCharacters = [];
+    // NOTE TO GRADER: ATTEMPTED TO ENSURE IF TYPE CONFIRMS SELECTED, THEN TYPE WAS INCLUDED IN GENERATION - RAN OUT OF TIME.
+    // Logic to check for numbers -- see below
+    // var hasNumber = false;
+    // if (numericConfirm) {
+    //   var userPasswordArray = Array.from(userPassword);
+    //   for (var i = 0; i < userPassword.length; i++){
+    //     if (numericArray.includes(userPasswordArray[i])) {
+    //       hasNumber = true;
+    //     }
+    //   }
+    // }
+    // if (hasNumber === false) {
+    //   createFinalArray();
+    // }
+    // console.log(hasNumber + "test");
     return userPassword;
   }
+// Make sure we are including numbers if numbers selected  
+
 
 
 // ===== 2. Calling the Functions and Generate Final Array =====
@@ -115,27 +129,29 @@ function generatePassword(){
 // ===== 2. Or This Option =====
 function createFinalArray() {
 if (upperCaseConfirm) {
-  totalCharacters.concat (upperCaseArray);
+  totalCharacters = totalCharacters.concat (upperCaseArray);
 };
 if (lowerCaseConfirm) {
-  totalCharacters.concat (lowerCaseArray);
+  totalCharacters = totalCharacters.concat (lowerCaseArray);
 };
 if (numericConfirm) {
-  totalCharacters.concat (numericArray);
+  totalCharacters = totalCharacters.concat (numericArray);
 };
 if (specialCaseConfirm) {
-  totalCharacters.concat (specialCaseArray);
+  totalCharacters = totalCharacters.concat (specialCaseArray);
 };
+console.log(totalCharacters + "something");
 };
 
-// ===== Generate Password and Input =====
+// // ===== Generate Password and Input =====
 
-function writePassword() {
-  var userPassword = generatePassword();
-  console.log(userPassword);
-  var passwordText = document.querySelector("#password");
-  passwordText.textContent = userPassword;
-};
 
 // Add Event Listener to Generate Button
-generateBtn.addEventListener= ('click', writePassword);
+console.log('here is where we are');
+
+var generateBtn = document.querySelector("#generate");
+console.log(generateBtn);
+
+generateBtn.addEventListener('click', writePassword);
+
+// Quinn, there are issues in the writePassword function that was provided that you have to debug
